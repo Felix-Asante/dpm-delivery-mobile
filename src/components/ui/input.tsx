@@ -40,7 +40,7 @@ export function Input(props: InputProps) {
       {label ? (
         <TextField.Label
           className={cn("text-sm font-medium", labelClassName)}
-          isInvalid={false}
+          isInvalid={isInvalid}
         >
           {label}
         </TextField.Label>
@@ -48,7 +48,6 @@ export function Input(props: InputProps) {
       <View className="w-full flex-row items-center">
         <TextField.Input
           placeholder={placeholder}
-          isInvalid={false}
           className={cn(
             "w-full border border-gray-300 h-12 shadow-none",
             prefix ? "pl-10" : "",
@@ -56,6 +55,7 @@ export function Input(props: InputProps) {
             className,
           )}
           {...inputProps}
+          isInvalid={isInvalid}
         />
         {prefix ? <View className="absolute left-3.5">{prefix}</View> : null}
         {suffix ? <View className="absolute right-4">{suffix}</View> : null}

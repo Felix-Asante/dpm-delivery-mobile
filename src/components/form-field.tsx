@@ -1,8 +1,8 @@
-import { useController, type Control, type FieldValues } from "react-hook-form";
+import { useController, type Control } from "react-hook-form";
 import { Input, type InputProps } from "./ui/input";
 
 interface FormFieldProps extends InputProps {
-  control: Control<FieldValues, any, FieldValues>;
+  control: Control<any, any, any>;
   name: string;
   defaultValue?: any;
 }

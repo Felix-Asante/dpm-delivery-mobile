@@ -2,25 +2,33 @@ import { FormField } from "@/components/form-field";
 import { useErrorHandler } from "@/hooks/use-error-handler";
 import { api } from "@/services/api";
 import { Ionicons } from "@expo/vector-icons";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { Button } from "heroui-native";
+import { useRouter } from "expo-router";
+import { Button, Spinner, useThemeColor } from "heroui-native";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Text, View } from "react-native";
+import { loginSchema, type LoginSchemaInput } from "./validations";
 
 export function LoginForm() {
-  const form = useForm();
+  const form = useForm<LoginSchemaInput>({
+    resolver: zodResolver(loginSchema),
+  });
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const { handleError } = useErrorHandler("LoginForm");
+  const themeColorAccentForeground = useThemeColor("accent-foreground");
+  const router = useRouter();
 
   const loginMutation = useMutation({
     mutationFn: api.auth.login,
     retry: 1,
   });
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: LoginSchemaInput) => {
     try {
       await loginMutation.mutateAsync(data);
+      router.replace("/");
     } catch (error) {
       handleError(error);
     }
@@ -64,7 +72,14 @@ export function LoginForm() {
         />
       </View>
 
-      <Button onPress={form.handleSubmit(onSubmit)} variant="primary">
+      <Button
+        isDisabled={loginMutation.isPending}
+        onPress={form.handleSubmit(onSubmit)}
+        variant="primary"
+      >
+        {loginMutation.isPending ? (
+          <Spinner color={themeColorAccentForeground} />
+        ) : null}
         Log In
       </Button>
       <Text className="text-center text-xs text-muted mt-2">
