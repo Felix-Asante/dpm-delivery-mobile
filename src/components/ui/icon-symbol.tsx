@@ -24,6 +24,8 @@ const MAPPING = {
   "lock.fill": "lock",
   "phone.fill": "phone",
   "eye.fill": "remove-red-eye",
+  "clock.arrow.circlepath": "history",
+  "arrow.left.arrow.right": "compare-arrows",
 } as IconMapping;
 
 /**

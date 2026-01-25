@@ -1,6 +1,7 @@
 import { FormField } from "@/components/form-field";
 import { useErrorHandler } from "@/hooks/use-error-handler";
 import { api } from "@/services/api";
+import { Storage, StorageKeys } from "@/utils/storage";
 import { Ionicons } from "@expo/vector-icons";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
@@ -27,7 +28,9 @@ export function LoginForm() {
 
   const onSubmit = async (data: LoginSchemaInput) => {
     try {
-      await loginMutation.mutateAsync(data);
+      const response = await loginMutation.mutateAsync(data);
+      Storage.setToken(StorageKeys.AUTH_TOKEN, response.data.accessToken);
+      Storage.setObject(StorageKeys.USER, response.data.user);
       router.replace("/");
     } catch (error) {
       handleError(error);
