@@ -1,14 +1,28 @@
 import { AppConfig } from "@/constants/config";
+import { getUserWalletQueryOptions } from "@/lib/tanstack-query/query-options/users";
 import type { User } from "@/types/auth.types";
 import { getInitials } from "@/utils/common";
+import { formatCurrency } from "@/utils/currency";
 import { Storage, StorageKeys } from "@/utils/storage";
 import { Ionicons } from "@expo/vector-icons";
-import { Avatar, Button } from "heroui-native";
+import { useQuery } from "@tanstack/react-query";
+import { Avatar, Button, Skeleton } from "heroui-native";
 import React from "react";
 import { ImageBackground, Text, View } from "react-native";
+import { RiderAccountStats } from "./account-stats";
+import { AvailableDeliveries } from "./available-deliveries";
 
 export function RidersHomePage() {
   const user = Storage.getObject(StorageKeys.USER) as User;
+
+  const { data: walletResponse, isLoading } = useQuery(
+    getUserWalletQueryOptions(),
+  );
+
+  const wallet = walletResponse?.data;
+
+  const accountBalance = wallet?.balance ? +wallet.balance : 0;
+  const totalEarnings = wallet?.totalEarned ? +wallet.totalEarned : 0;
 
   return (
     <View className="pt-4">
@@ -37,9 +51,13 @@ export function RidersHomePage() {
               Your total available earnings
             </Text>
             <View className="flex-row items-baseline gap-2 mb-4">
-              <Text className="text-3xl text-white font-bold">
-                {AppConfig.currency.symbol} 0.00
-              </Text>
+              {isLoading ? (
+                <Skeleton className="w-24 h-6 rounded-lg" />
+              ) : (
+                <Text className="text-3xl text-white font-bold">
+                  {AppConfig.currency.symbol} {formatCurrency(accountBalance)}
+                </Text>
+              )}
               <Text className="text-sm text-white/60">
                 {AppConfig.currency.label}
               </Text>
@@ -65,6 +83,10 @@ export function RidersHomePage() {
           </View>
         </ImageBackground>
       </View>
+      {/* account stats */}
+      <RiderAccountStats totalEarnings={totalEarnings} />
+      {/* available deliveries */}
+      <AvailableDeliveries />
     </View>
   );
 }
