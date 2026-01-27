@@ -1,0 +1,17 @@
+export enum ShipmentStatus {
+  OUT_FOR_DELIVERY = "out_for_delivery",
+  FAILED_DELIVERY_ATTEMPT = "failed_delivery_attempt",
+  DELIVERED = "delivered",
+  RIDER_REASSIGNED = "rider_reassigned",
+  PICKUP_CONFIRMED = "pickup_confirmed",
+  PENDING = "pending",
+  RIDER_ASSIGNED = "rider_assigned",
+  PAYMENT_RECEIVED = "payment_received",
+  RETURNED = "returned",
+  ON_HOLD = "on_hold",
+  REPACKAGED = "repackaged",
+  IN_TRANSIT = "in_transit",
+  ARRIVED = "arrived",
+  READY_FOR_PICKUP = "ready_for_pickup",
+  REFUNDED = "refunded",
+}

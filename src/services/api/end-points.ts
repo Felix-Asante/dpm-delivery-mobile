@@ -26,10 +26,18 @@ const userEndPoints = {
   payout_request: () => `/wallets/payout-request`,
 };
 
+export const shipmentEndPoints = {
+  list: (query: Query) => `shipping${toQueryParams(query)}`,
+  get: (shipmentId: string) => `shipping/${shipmentId}`,
+  update_history: (shipmentId: string) =>
+    `shipping/${shipmentId}/update-history`,
+};
+
 export const apiEndPoints = {
   baseUrl: apiBaseUrl,
   auth: authEndPoints,
   riders: riderEndPoints,
   users: userEndPoints,
   payouts: payoutEndPoints,
+  shipments: shipmentEndPoints,
 };

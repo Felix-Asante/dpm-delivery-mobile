@@ -1,5 +1,6 @@
 import { AppConfig } from "@/constants/config";
 import { getRiderAccountStatQueryOptions } from "@/lib/tanstack-query/query-options/users";
+import { formatCurrency } from "@/utils/currency";
 import { Storage, StorageKeys } from "@/utils/storage";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "heroui-native";
@@ -27,7 +28,7 @@ export function RiderAccountStats({ totalEarnings }: RiderAccountStatsProps) {
   const STATS = [
     {
       label: "Total revenue",
-      value: `${AppConfig.currency.symbol} ${totalRevenue.toFixed(2)}`,
+      value: `${AppConfig.currency.symbol} ${formatCurrency(totalRevenue)}`,
     },
     {
       label: "Total deliveries today",

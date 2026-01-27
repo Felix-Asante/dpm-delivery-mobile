@@ -50,3 +50,7 @@ export type LoginResponse = {
   user: User;
   accessToken: string;
 };
+
+export type Rider = User & {
+  rider: RiderInfo;
+};
