@@ -5,25 +5,25 @@ export function getStatusColor(status: string) {
     case ShipmentStatus.OUT_FOR_DELIVERY:
     case ShipmentStatus.IN_TRANSIT:
     case ShipmentStatus.RIDER_ASSIGNED:
-      return "bg-cyan-100";
+      return "bg-accent/10";
     case ShipmentStatus.DELIVERED:
     case ShipmentStatus.PAYMENT_RECEIVED:
-      return "bg-green-100";
+      return "bg-green-100/10";
     case ShipmentStatus.PENDING:
     case ShipmentStatus.READY_FOR_PICKUP:
-      return "bg-yellow-100";
+      return "bg-yellow-100/10";
     case ShipmentStatus.PICKUP_CONFIRMED:
     case ShipmentStatus.ARRIVED:
-      return "bg-blue-100";
+      return "bg-blue-100/10";
     case ShipmentStatus.FAILED_DELIVERY_ATTEMPT:
     case ShipmentStatus.ON_HOLD:
-      return "bg-red-100";
+      return "bg-red-100/10";
     case ShipmentStatus.RETURNED:
     case ShipmentStatus.REFUNDED:
-      return "bg-orange-100";
+      return "bg-orange-100/10";
     case ShipmentStatus.RIDER_REASSIGNED:
     case ShipmentStatus.REPACKAGED:
-      return "bg-purple-100";
+      return "bg-purple-100/10";
     default:
       return "bg-gray-100";
   }
@@ -34,7 +34,7 @@ export function getStatusTextColor(status: string) {
     case ShipmentStatus.OUT_FOR_DELIVERY:
     case ShipmentStatus.IN_TRANSIT:
     case ShipmentStatus.RIDER_ASSIGNED:
-      return "text-cyan-600";
+      return "text-accent";
     case ShipmentStatus.DELIVERED:
     case ShipmentStatus.PAYMENT_RECEIVED:
       return "text-green-600";

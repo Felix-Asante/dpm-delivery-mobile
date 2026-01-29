@@ -15,3 +15,10 @@ export enum ShipmentStatus {
   READY_FOR_PICKUP = "ready_for_pickup",
   REFUNDED = "refunded",
 }
+
+export enum ShipmentOptions {
+  STANDARD = "standard_delivery",
+  EXPRESS = "express_delivery",
+  SPECIAL = "special_delivery",
+  BULK = "bulk_delivery",
+}

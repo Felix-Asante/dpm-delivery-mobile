@@ -6,5 +6,7 @@ import type { ShipmentService } from "./interface";
 export function createShipmentService(httpClient: HttpClient): ShipmentService {
   return {
     list: (query: Query) => httpClient.get(apiEndPoints.shipments.list(query)),
+    getByReference: (reference: string) =>
+      httpClient.get(apiEndPoints.shipments.getByReference(reference)),
   };
 }

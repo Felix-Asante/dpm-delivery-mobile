@@ -4,7 +4,7 @@ import { ShipmentStatus } from "@/types/enums/shipment.enum";
 import { Ionicons } from "@expo/vector-icons";
 import { FlashList } from "@shopify/flash-list";
 import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { Button, Skeleton } from "heroui-native";
 import React from "react";
 import { ScrollView, Text, View } from "react-native";
@@ -31,7 +31,11 @@ export function AvailableDeliveries() {
       ) : (
         <FlashList
           data={shipments}
-          renderItem={({ item }) => <ShipmentCard shipment={item} />}
+          renderItem={({ item }) => (
+            <Link asChild href={`/shipments/${item.reference}`}>
+              <ShipmentCard shipment={item} />
+            </Link>
+          )}
           keyExtractor={(item) => item.id}
           showsVerticalScrollIndicator={false}
         />

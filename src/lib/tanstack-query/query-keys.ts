@@ -9,5 +9,10 @@ export const queryKeys = {
   },
   shipments: {
     list: (query: Query) => ["shipments", "list", ...Object.entries(query)],
+    getByReference: (reference: string) => [
+      "shipments",
+      "getByReference",
+      reference,
+    ],
   },
 };
