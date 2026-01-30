@@ -57,8 +57,8 @@ function Empty() {
       </Text>
 
       <Text className="text-sm text-secondary/60 text-center mb-2 px-4">
-        There are no delivery requests at the moment. Check back soon or refresh
-        to see new opportunities.
+        There are no delivery requests at the moment. Check back soon or visit
+        the history tab to see past deliveries and deliveries in progress.
       </Text>
 
       <View className="flex-row gap-3 w-full">
