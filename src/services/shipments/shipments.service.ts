@@ -8,5 +8,7 @@ export function createShipmentService(httpClient: HttpClient): ShipmentService {
     list: (query: Query) => httpClient.get(apiEndPoints.shipments.list(query)),
     getByReference: (reference: string) =>
       httpClient.get(apiEndPoints.shipments.getByReference(reference)),
+    updateStatus: (shipmentId: string, data: FormData) =>
+      httpClient.patch(apiEndPoints.shipments.update_status(shipmentId), data),
   };
 }

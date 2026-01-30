@@ -473,6 +473,7 @@ export default function ShipmentDetail() {
         visible={isUpdateStatusModalVisible}
         onClose={() => setIsUpdateStatusModalVisible(false)}
         shipmentId={shipment?.id || ""}
+        shipmentReference={shipment?.reference || ""}
         currentStatus={shipment?.status || ""}
       />
     </View>

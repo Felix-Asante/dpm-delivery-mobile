@@ -32,6 +32,8 @@ export const shipmentEndPoints = {
   update_history: (shipmentId: string) =>
     `shipping/${shipmentId}/update-history`,
   getByReference: (reference: string) => `shipping/reference/${reference}`,
+  update_status: (shipmentId: string) =>
+    `shipping/${shipmentId}/update-history`,
 };
 
 export const apiEndPoints = {
