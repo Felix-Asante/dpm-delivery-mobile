@@ -1,6 +1,11 @@
+import { FormField } from "@/components/form-field";
+import ImagePicker from "@/components/image-picker";
+import { riderUpdateStatusOptions } from "@/constants/ride-status";
 import { ShipmentStatus } from "@/types/enums/shipment.enum";
 import { Ionicons } from "@expo/vector-icons";
+import { Button } from "heroui-native";
 import React from "react";
+import { useForm } from "react-hook-form";
 import { Modal, Pressable, ScrollView, Text, View } from "react-native";
 
 interface UpdateStatusModalProps {
@@ -16,55 +21,11 @@ export function UpdateStatusModal({
   shipmentId,
   currentStatus,
 }: UpdateStatusModalProps) {
-  const statusOptions = [
-    {
-      value: ShipmentStatus.PICKUP_CONFIRMED,
-      label: "Pickup Confirmed",
-      icon: "checkmark-circle" as const,
-      description: "Package picked up from sender",
-    },
-    {
-      value: ShipmentStatus.IN_TRANSIT,
-      label: "In Transit",
-      icon: "navigate" as const,
-      description: "Package is on the way",
-    },
-    {
-      value: ShipmentStatus.ARRIVED,
-      label: "Arrived",
-      icon: "location" as const,
-      description: "Arrived at destination area",
-    },
-    {
-      value: ShipmentStatus.OUT_FOR_DELIVERY,
-      label: "Out for Delivery",
-      icon: "bicycle" as const,
-      description: "Final delivery in progress",
-    },
-    {
-      value: ShipmentStatus.DELIVERED,
-      label: "Delivered",
-      icon: "checkmark-done-circle" as const,
-      description: "Successfully delivered to recipient",
-    },
-    {
-      value: ShipmentStatus.FAILED_DELIVERY_ATTEMPT,
-      label: "Failed Delivery",
-      icon: "close-circle" as const,
-      description: "Delivery attempt unsuccessful",
-    },
-    {
-      value: ShipmentStatus.ON_HOLD,
-      label: "On Hold",
-      icon: "pause-circle" as const,
-      description: "Delivery temporarily paused",
-    },
-  ];
+  const form = useForm();
 
   const handleStatusUpdate = (status: ShipmentStatus) => {
     // TODO: Implement API call to update status
     console.log("Updating status to:", status, "for shipment:", shipmentId);
-    onClose();
   };
 
   return (
@@ -97,11 +58,11 @@ export function UpdateStatusModal({
 
           {/* Status Options */}
           <ScrollView
-            className="max-h-96"
+            className="max-h-[75%]"
             showsVerticalScrollIndicator={false}
           >
             <View className="p-4 gap-2">
-              {statusOptions.map((option) => (
+              {riderUpdateStatusOptions.map((option) => (
                 <Pressable
                   key={option.value}
                   onPress={() => handleStatusUpdate(option.value)}
@@ -161,8 +122,31 @@ export function UpdateStatusModal({
                   </View>
                 </Pressable>
               ))}
+              <View className="mt-2 gap-4">
+                <FormField
+                  control={form.control}
+                  name="reason"
+                  label="Reason"
+                  placeholder="Enter reason for status change"
+                />
+                <ImagePicker
+                  label="Proof of Delivery"
+                  description="Upload clear photos of the delivered parcel"
+                  allowsMultiple={true}
+                  maxImages={3}
+                  // errorMessage="At least one photo is required"
+                  onImagesChange={(images) => console.log("photos", images)}
+                  allowedImageTypes={["jpg", "jpeg", "png"]}
+                />
+              </View>
             </View>
           </ScrollView>
+          <Button
+            className="mx-5"
+            onPress={() => handleStatusUpdate(ShipmentStatus.DELIVERED)}
+          >
+            Update Status
+          </Button>
         </View>
       </View>
     </Modal>

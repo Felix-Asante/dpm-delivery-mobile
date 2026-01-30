@@ -1,5 +1,5 @@
-import { UpdateStatusModal } from "@/components/update-status-modal";
 import { getShipmentByReferenceQueryOptions } from "@/lib/tanstack-query/query-options/shipment";
+import { UpdateStatusModal } from "@/modules/dashboard/parcels/riders/shipment/update-status-modal";
 import { ShipmentStatus } from "@/types/enums/shipment.enum";
 import { getShipmentOptionDisplay } from "@/utils/enum-helpers";
 import { getStatusColor, getStatusTextColor } from "@/utils/style";
