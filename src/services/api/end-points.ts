@@ -27,13 +27,15 @@ const userEndPoints = {
 };
 
 export const shipmentEndPoints = {
-  list: (query: Query) => `shipping${toQueryParams(query)}`,
-  get: (shipmentId: string) => `shipping/${shipmentId}`,
+  list: (query: Query) => `/shipping${toQueryParams(query)}`,
+  get: (shipmentId: string) => `/shipping/${shipmentId}`,
   update_history: (shipmentId: string) =>
-    `shipping/${shipmentId}/update-history`,
-  getByReference: (reference: string) => `shipping/reference/${reference}`,
+    `/shipping/${shipmentId}/update-history`,
+  getByReference: (reference: string) => `/shipping/reference/${reference}`,
   update_status: (shipmentId: string) =>
-    `shipping/${shipmentId}/update-history`,
+    `/shipping/${shipmentId}/update-history`,
+  transactions: (query: Query) =>
+    `/users/wallet/transactions${toQueryParams(query)}`,
 };
 
 export const apiEndPoints = {

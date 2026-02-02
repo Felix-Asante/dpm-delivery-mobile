@@ -9,5 +9,7 @@ export function createUserService(httpClient: HttpClient): IUserService {
       stats: (riderId: string) =>
         httpClient.get(apiEndPoints.riders.stats(riderId)),
     },
+    transactions: (query) =>
+      httpClient.get(apiEndPoints.users.transactions(query)),
   };
 }
