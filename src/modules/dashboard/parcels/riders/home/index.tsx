@@ -6,6 +6,7 @@ import { formatCurrency } from "@/utils/currency";
 import { Storage, StorageKeys } from "@/utils/storage";
 import { Ionicons } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "expo-router";
 import { Avatar, Button, Skeleton } from "heroui-native";
 import React from "react";
 import { ImageBackground, Text, View } from "react-native";
@@ -14,6 +15,8 @@ import { AvailableDeliveries } from "./available-deliveries";
 
 export function RidersHomePage() {
   const user = Storage.getObject(StorageKeys.USER) as User;
+
+  const router = useRouter();
 
   const { data: walletResponse, isLoading } = useQuery(
     getUserWalletQueryOptions(),
@@ -63,7 +66,11 @@ export function RidersHomePage() {
               </Text>
             </View>
             <View className="flex-row items-center">
-              <Button size="sm" className="rounded-full flex-1">
+              <Button
+                size="sm"
+                className="rounded-full flex-1"
+                onPress={() => router.push("/(parcel)/(stack)/request-payment")}
+              >
                 <Ionicons name="cash-outline" size={16} color="white" />
                 <Text className="text-white font-medium ml-1">
                   Request Payment
@@ -73,6 +80,7 @@ export function RidersHomePage() {
                 size="sm"
                 variant="ghost"
                 className="flex-1 border-white/20"
+                onPress={() => router.push("/(parcel)/(tabs)/transactions")}
               >
                 <Ionicons name="list-outline" size={16} color="white" />
                 <Text className="text-white font-medium ml-1">

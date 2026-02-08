@@ -38,6 +38,10 @@ export const shipmentEndPoints = {
     `/users/wallet/transactions${toQueryParams(query)}`,
 };
 
+const paymentEndPoints = {
+  verifyMobileMoneyNumber: () => `/payment/verify-mobile-money-account`,
+};
+
 export const apiEndPoints = {
   baseUrl: apiBaseUrl,
   auth: authEndPoints,
@@ -45,4 +49,5 @@ export const apiEndPoints = {
   users: userEndPoints,
   payouts: payoutEndPoints,
   shipments: shipmentEndPoints,
+  payment: paymentEndPoints,
 };

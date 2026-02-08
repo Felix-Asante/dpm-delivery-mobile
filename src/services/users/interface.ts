@@ -1,4 +1,8 @@
 import type { ApiResponse, Query } from "@/types";
+import type {
+  CreatePayoutRequestDto,
+  PayoutRequest,
+} from "@/types/payout.types";
 import type { GetWalletTransactionsResponse } from "@/types/transactions.types";
 import type { RiderStats } from "@/types/users.types";
 import type { Wallet } from "@/types/wallet.types";
@@ -9,4 +13,7 @@ export interface IUserService {
     stats: (riderId: string) => ApiResponse<RiderStats>;
   };
   transactions: (query: Query) => ApiResponse<GetWalletTransactionsResponse>;
+  createPayoutRequest: (
+    data: CreatePayoutRequestDto,
+  ) => ApiResponse<PayoutRequest>;
 }

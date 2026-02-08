@@ -11,5 +11,7 @@ export function createUserService(httpClient: HttpClient): IUserService {
     },
     transactions: (query) =>
       httpClient.get(apiEndPoints.users.transactions(query)),
+    createPayoutRequest: (data) =>
+      httpClient.post(apiEndPoints.users.payout_request(), data),
   };
 }

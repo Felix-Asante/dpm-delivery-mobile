@@ -31,6 +31,22 @@ export default function StackLayout() {
           ),
         }}
       />
+      <Stack.Screen
+        name="request-payment"
+        options={{
+          headerShown: true,
+          headerShadowVisible: false,
+          title: "",
+          headerLeft: () => (
+            <Pressable
+              onPress={goBack}
+              className="w-9 h-9 rounded-full bg-gray-100 items-center justify-center"
+            >
+              <Ionicons name="arrow-back" size={18} color="black" />
+            </Pressable>
+          ),
+        }}
+      />
     </Stack>
   );
 }
