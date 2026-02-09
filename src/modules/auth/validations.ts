@@ -9,7 +9,7 @@ export const loginSchema = z.object({
   password: z
     .string(INPUT_REQUIRED_INVALID_ERROR)
     .min(1, "Password is required")
-    .regex(validationRules.Phone, "Invalid phone number"),
+    .regex(validationRules.Password, "Invalid password"),
 });
 
 export type LoginSchemaInput = z.infer<typeof loginSchema>;

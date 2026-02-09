@@ -35,7 +35,7 @@ export const updateShipmentStatusSchema = z
     if (data.status === ShipmentStatus.PICKUP_CONFIRMED && !data.photo) {
       ctx.addIssue({
         code: "custom",
-        message: "Photo is required",
+        message: "Proof of pickup is required",
         path: ["photo"],
       });
     }

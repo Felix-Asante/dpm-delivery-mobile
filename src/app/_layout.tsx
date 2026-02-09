@@ -9,12 +9,15 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 
+import { Appearance } from "react-native";
 import "../global.css";
 
 export const unstable_settings = {
   anchor: "(public)/auth/sign-in",
   initialRouteName: "(public)/auth/sign-in",
 };
+
+Appearance.setColorScheme("light");
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();

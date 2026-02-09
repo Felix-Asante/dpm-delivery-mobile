@@ -6,7 +6,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 export default function SignInScreen() {
   return (
     <KeyboardAwareScrollView
-      contentContainerStyle={{ flexGrow: 1 }}
+      contentContainerStyle={{ flexGrow: 1, backgroundColor: "white" }}
       bottomOffset={60}
     >
       <View className="bg-accent h-full flex-1">
@@ -17,7 +17,7 @@ export default function SignInScreen() {
           autoPlay
           loop
         />
-        <View className="bg-white rounded-3xl p-5 pt-8 flex-1">
+        <View className="bg-white rounded-t-3xl p-5 pt-8 flex-1">
           <Text className="text-primary font-medium text-2xl">
             Welcome back 👋
           </Text>

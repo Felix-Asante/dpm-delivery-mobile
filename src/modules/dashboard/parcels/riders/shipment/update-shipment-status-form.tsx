@@ -19,7 +19,8 @@ import {
 } from "heroui-native";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Pressable, ScrollView, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import {
   updateShipmentStatusSchema,
   type UpdateShipmentStatusField,
@@ -120,119 +121,121 @@ export function UpdateShipmentStatusForm(props: UpdateShipmentStatusFormProps) {
   const paidError = form.formState.errors?.paid?.message as string | undefined;
 
   return (
-    <View>
-      <ScrollView className="max-h-[90%]" showsVerticalScrollIndicator={false}>
-        <View className="p-4 gap-2">
-          {riderUpdateStatusOptions.map((option) => {
-            const isSelected =
-              currentStatus === option.value || selectedStatus === option.value;
-            const isCurrent = currentStatus === option.value;
-            return (
-              <Pressable
-                key={option.value}
-                onPress={() => {
-                  form.reset({
-                    status: option.value,
-                    reason: "",
-                    photo: undefined,
-                  });
-                }}
-                disabled={isCurrent}
-                className={`${
-                  isSelected
+    <KeyboardAwareScrollView
+      contentContainerStyle={{
+        flexGrow: 1,
+        backgroundColor: "white",
+      }}
+      bottomOffset={60}
+      showsVerticalScrollIndicator={false}
+    >
+      <View className="p-4 gap-2">
+        {riderUpdateStatusOptions.map((option) => {
+          const isSelected = selectedStatus === option.value;
+          const isCurrent = currentStatus === option.value;
+          return (
+            <Pressable
+              key={option.value}
+              onPress={() => {
+                form.reset({
+                  status: option.value,
+                  reason: "",
+                  photo: undefined,
+                });
+              }}
+              disabled={isCurrent}
+              className={`${
+                isCurrent
+                  ? "bg-secondary/10 border-secondary/20"
+                  : isSelected
                     ? "bg-accent/10 border-accent"
                     : "bg-white border-gray-200"
-                } border rounded-2xl p-4 active:bg-gray-50`}
-              >
-                <View className="flex-row items-center gap-3">
-                  <View
-                    className={`${
-                      isSelected ? "bg-accent/20" : "bg-gray-100"
-                    } rounded-full p-3`}
-                  >
-                    <Ionicons
-                      name={option.icon}
-                      size={24}
-                      color={isSelected ? "#f97316" : "#6b7280"}
-                    />
-                  </View>
-                  <View className="flex-1">
-                    <View className="flex-row items-center gap-2">
-                      <Text
-                        className={`${
-                          isSelected ? "text-accent" : "text-secondary"
-                        } text-base font-semibold`}
-                      >
-                        {option.label}
-                      </Text>
-                      {isCurrent && (
-                        <View className="bg-accent/20 rounded-full px-2 py-0.5">
-                          <Text className="text-accent text-xs font-semibold">
-                            Current
-                          </Text>
-                        </View>
-                      )}
-                    </View>
-                    <Text className="text-sm text-gray-600 mt-0.5">
-                      {option.description}
-                    </Text>
-                  </View>
-                  {!isSelected && (
-                    <Ionicons
-                      name="chevron-forward"
-                      size={20}
-                      color="#9ca3af"
-                    />
-                  )}
+              } border rounded-2xl p-4 active:bg-gray-50`}
+            >
+              <View className="flex-row items-center gap-3">
+                <View
+                  className={`${
+                    isSelected ? "bg-accent/20" : "bg-gray-100"
+                  } rounded-full p-3`}
+                >
+                  <Ionicons
+                    name={option.icon}
+                    size={24}
+                    color={isSelected ? "#f97316" : "#6b7280"}
+                  />
                 </View>
-              </Pressable>
-            );
-          })}
-          <View className="mt-2 gap-4">
-            {canAddReasons.includes(selectedStatus) ? (
+                <View className="flex-1">
+                  <View className="flex-row items-center gap-2">
+                    <Text
+                      className={`${
+                        isSelected ? "text-accent" : "text-secondary"
+                      } text-base font-semibold`}
+                    >
+                      {option.label}
+                    </Text>
+                    {isCurrent && (
+                      <View className="bg-accent/20 rounded-full px-2 py-0.5">
+                        <Text className="text-accent text-xs font-semibold">
+                          Current
+                        </Text>
+                      </View>
+                    )}
+                  </View>
+                  <Text className="text-sm text-gray-600 mt-0.5">
+                    {option.description}
+                  </Text>
+                </View>
+                {!isSelected && (
+                  <Ionicons name="chevron-forward" size={20} color="#9ca3af" />
+                )}
+              </View>
+            </Pressable>
+          );
+        })}
+        <View className="mt-2 gap-4">
+          {canAddReasons.includes(selectedStatus) ? (
+            <FormField
+              control={form.control}
+              name="reason"
+              label="Reason"
+              placeholder="Enter reason for status change"
+            />
+          ) : null}
+          {selectedStatus === ShipmentStatus.PICKUP_CONFIRMED ? (
+            <ImagePicker
+              label="Proof of Delivery"
+              description="Upload clear photos of the delivered parcel"
+              allowsMultiple={false}
+              maxImages={1}
+              errorMessage={photoError}
+              onImagesChange={(images) => console.log("photos", images)}
+              allowedImageTypes={["jpg", "jpeg", "png"]}
+            />
+          ) : null}
+          {selectedStatus === ShipmentStatus.DELIVERED ? (
+            <>
               <FormField
                 control={form.control}
-                name="reason"
-                label="Reason"
-                placeholder="Enter reason for status change"
+                name="confirmationCode"
+                label="Confirmation Code"
+                placeholder="Enter confirmation code"
               />
-            ) : null}
-            {selectedStatus === ShipmentStatus.PICKUP_CONFIRMED ? (
-              <ImagePicker
-                label="Proof of Delivery"
-                description="Upload clear photos of the delivered parcel"
-                allowsMultiple={false}
-                maxImages={1}
-                errorMessage={photoError}
-                onImagesChange={(images) => console.log("photos", images)}
-                allowedImageTypes={["jpg", "jpeg", "png"]}
-              />
-            ) : null}
-            {selectedStatus === ShipmentStatus.DELIVERED ? (
-              <>
-                <FormField
-                  control={form.control}
-                  name="confirmationCode"
-                  label="Confirmation Code"
-                  placeholder="Enter confirmation code"
+              <View className="flex-row items-center gap-2">
+                <Checkbox
+                  isSelected={form.watch("paid")}
+                  onSelectedChange={(value) => form.setValue("paid", value)}
+                  className="border border-gray-400 shadow-none"
+                  isInvalid={!!paidError}
                 />
-                <View className="flex-row items-center gap-2">
-                  <Checkbox
-                    isSelected={form.watch("paid")}
-                    onSelectedChange={(value) => form.setValue("paid", value)}
-                    className="border border-gray-400 shadow-none"
-                    isInvalid={!!paidError}
-                  />
-                  <Text>Has the order been paid?</Text>
-                </View>
-                <ErrorView isInvalid={!!paidError}>{paidError}</ErrorView>
-              </>
-            ) : null}
-          </View>
+                <Text>Has the order been paid?</Text>
+              </View>
+              <ErrorView isInvalid={!!paidError}>{paidError}</ErrorView>
+            </>
+          ) : null}
         </View>
-      </ScrollView>
+      </View>
       <Button
-        className="mx-5"
+        className="mx-5 mb-5"
         onPress={() => form.handleSubmit(handleStatusUpdate)()}
         isDisabled={updateStatusMutation.isPending}
       >
@@ -241,6 +244,6 @@ export function UpdateShipmentStatusForm(props: UpdateShipmentStatusFormProps) {
         ) : null}
         Update Status
       </Button>
-    </View>
+    </KeyboardAwareScrollView>
   );
 }

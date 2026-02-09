@@ -19,7 +19,8 @@ import { useRouter } from "expo-router";
 import { Button, Skeleton, useToast } from "heroui-native";
 import React, { useEffect, useState } from "react";
 import { Resolver, useForm } from "react-hook-form";
-import { ActivityIndicator, ScrollView, Text, View } from "react-native";
+import { ActivityIndicator, Text, View } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 
 export default function RequestPaymentScreen() {
   const router = useRouter();
@@ -126,7 +127,10 @@ export default function RequestPaymentScreen() {
   }
 
   return (
-    <ScrollView className="flex-1 bg-white">
+    <KeyboardAwareScrollView
+      contentContainerStyle={{ flexGrow: 1, backgroundColor: "white" }}
+      bottomOffset={60}
+    >
       <View className="p-5">
         <View className="flex-row items-center gap-3 mb-6">
           <View className="bg-accent/10 rounded-full p-3">
@@ -263,6 +267,6 @@ export default function RequestPaymentScreen() {
           </View>
         </View>
       </View>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 }
