@@ -69,7 +69,7 @@ export default function Transactions() {
     queryKey: ["transactions", "infinite", selectedFilter],
     queryFn: ({ pageParam = 1 }) => {
       const params: { limit: number; page: number; type?: string } = {
-        limit: 20,
+        limit: 10,
         page: pageParam,
       };
       if (selectedFilter !== "all") {

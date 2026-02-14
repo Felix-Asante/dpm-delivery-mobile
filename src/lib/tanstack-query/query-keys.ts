@@ -1,5 +1,3 @@
-import type { Query } from "@/types";
-
 export const queryKeys = {
   users: {
     wallet: () => ["users", "wallet"],
@@ -8,7 +6,11 @@ export const queryKeys = {
     },
   },
   shipments: {
-    list: (query: Query) => ["shipments", "list", ...Object.entries(query)],
+    getRiderLatestOrders: (riderId: string) => [
+      "shipments",
+      "getRiderLatestOrders",
+      riderId,
+    ],
     getByReference: (reference: string) => [
       "shipments",
       "getByReference",

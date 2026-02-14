@@ -28,6 +28,8 @@ const userEndPoints = {
 
 export const shipmentEndPoints = {
   list: (query: Query) => `/shipping${toQueryParams(query)}`,
+  getRiderLatestOrders: (riderId: string) =>
+    `/shipping/riders/${riderId}/latest-orders`,
   get: (shipmentId: string) => `/shipping/${shipmentId}`,
   update_history: (shipmentId: string) =>
     `/shipping/${shipmentId}/update-history`,

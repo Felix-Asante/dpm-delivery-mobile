@@ -26,6 +26,13 @@ const MAPPING = {
   "eye.fill": "remove-red-eye",
   "clock.arrow.circlepath": "history",
   "arrow.left.arrow.right": "compare-arrows",
+  "person.fill": "person",
+  "rectangle.portrait.and.arrow.right": "logout",
+  "gearshape.fill": "settings",
+  "pencil": "edit",
+  "envelope.fill": "email",
+  "location.fill": "location-on",
+  "checkmark.seal.fill": "verified",
 } as IconMapping;
 
 /**

@@ -1,23 +1,31 @@
 import { ShipmentCard } from "@/components/shipment-card";
 import { getShipmentsQueryOptions } from "@/lib/tanstack-query/query-options/shipment";
-import { ShipmentStatus } from "@/types/enums/shipment.enum";
+import { User } from "@/types/auth.types";
+import { Storage, StorageKeys } from "@/utils/storage";
 import { Ionicons } from "@expo/vector-icons";
 import { FlashList } from "@shopify/flash-list";
 import { useQuery } from "@tanstack/react-query";
-import { Link, useRouter } from "expo-router";
+import { Link, useFocusEffect, useRouter } from "expo-router";
 import { Button, Skeleton } from "heroui-native";
 import React from "react";
 import { ScrollView, Text, View } from "react-native";
 
 export function AvailableDeliveries() {
-  const { data: shipmentsResponse, isLoading } = useQuery(
-    getShipmentsQueryOptions({
-      status: ShipmentStatus.RIDER_ASSIGNED,
-      limit: 5,
-    }),
-  );
+  const user = Storage.getObject(StorageKeys.USER) as User;
+
+  const {
+    data: shipmentsResponse,
+    isLoading,
+    refetch,
+  } = useQuery(getShipmentsQueryOptions(user.id));
 
   const shipments = shipmentsResponse?.data.items || [];
+
+  useFocusEffect(
+    React.useCallback(() => {
+      refetch();
+    }, [refetch]),
+  );
 
   return (
     <View className="mt-4">
