@@ -19,24 +19,24 @@ A cross-platform mobile app for **delivery riders** to manage parcels, view earn
 
 ## Tech stack
 
-| Area | Choice |
-|------|--------|
-| Framework | [Expo](https://expo.dev) (~54) + [React Native](https://reactnative.dev) |
-| Language | TypeScript |
-| Routing | [Expo Router](https://docs.expo.dev/router/introduction/) (file-based) |
-| UI | [HeroUI Native](https://heroui.com), [Uniwind](https://github.com/uniwind-ui/uniwind) (Tailwind-style styling) |
-| Data & API | [TanStack Query](https://tanstack.com/query/latest), [Axios](https://axios-http.com) |
-| Forms & validation | [React Hook Form](https://react-hook-form.com), [Zod](https://zod.dev), [@hookform/resolvers](https://github.com/react-hook-form/resolvers) |
-| Storage | [MMKV](https://github.com/mrousavy/react-native-mmkv) (native), [expo-secure-store](https://docs.expo.dev/versions/latest/sdk/securestore/) (tokens), web crypto for web |
-| Lists | [FlashList](https://shopify.github.io/flash-list/) |
-| Icons | expo-symbols (iOS) + MaterialIcons fallback (Android/Web) via custom `IconSymbol` |
+| Area               | Choice                                                                                                                                                                   |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Framework          | [Expo](https://expo.dev) (~54) + [React Native](https://reactnative.dev)                                                                                                 |
+| Language           | TypeScript                                                                                                                                                               |
+| Routing            | [Expo Router](https://docs.expo.dev/router/introduction/) (file-based)                                                                                                   |
+| UI                 | [HeroUI Native](https://heroui.com), [Uniwind](https://github.com/uniwind-ui/uniwind) (Tailwind-style styling)                                                           |
+| Data & API         | [TanStack Query](https://tanstack.com/query/latest), [Axios](https://axios-http.com)                                                                                     |
+| Forms & validation | [React Hook Form](https://react-hook-form.com), [Zod](https://zod.dev), [@hookform/resolvers](https://github.com/react-hook-form/resolvers)                              |
+| Storage            | [MMKV](https://github.com/mrousavy/react-native-mmkv) (native), [expo-secure-store](https://docs.expo.dev/versions/latest/sdk/securestore/) (tokens), web crypto for web |
+| Lists              | [FlashList](https://shopify.github.io/flash-list/)                                                                                                                       |
+| Icons              | expo-symbols (iOS) + MaterialIcons fallback (Android/Web) via custom `IconSymbol`                                                                                        |
 
 ---
 
 ## Prerequisites
 
 - **Node.js** (LTS recommended, e.g. 18+)
-- **npm** or **yarn**
+- **bun**
 - **Expo CLI** (optional; `npx expo` is enough)
 - **iOS**: Xcode (Mac) for simulator/device
 - **Android**: Android Studio / SDK for emulator or device
@@ -73,29 +73,29 @@ Missing vars will throw at runtime (see `src/utils/env.ts`).
 ### 3. Start the app
 
 ```bash
-npx expo start
+bunx expo start
 ```
 
 Then:
 
-- Press **i** for iOS simulator  
-- Press **a** for Android emulator  
-- Press **w** for web  
+- Press **i** for iOS simulator
+- Press **a** for Android emulator
+- Press **w** for web
 - Or scan the QR code with **Expo Go** on a physical device (for development builds, use a custom dev client).
 
 ---
 
 ## Scripts
 
-| Command | Description |
-|--------|-------------|
-| `npm start` | Start Expo dev server |
-| `npm run android` | Run on Android |
-| `npm run ios` | Run on iOS |
-| `npm run web` | Start with web |
-| `npm run lint` | Run ESLint |
-| `npm run generate-apk` | Build release APK (Android) |
-| `npm run view:apk` | Open folder containing generated APK |
+| Command                | Description                          |
+| ---------------------- | ------------------------------------ |
+| `bun start`            | Start Expo dev server                |
+| `bun run android`      | Run on Android                       |
+| `bun run ios`          | Run on iOS                           |
+| `bun run web`          | Start with web                       |
+| `bun run lint`         | Run ESLint                           |
+| `bun run generate-apk` | Build release APK (Android)          |
+| `bun run view:apk`     | Open folder containing generated APK |
 
 ---
 
@@ -140,10 +140,6 @@ src/
 
 ## License
 
-Private / All rights reserved (or add your chosen license).
+Private / All rights reserved.
 
 ---
-
-## Contributing
-
-Contributions are welcome. Please open an issue or PR and follow the existing code style and structure.
