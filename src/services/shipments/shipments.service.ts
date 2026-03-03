@@ -10,7 +10,11 @@ export function createShipmentService(httpClient: HttpClient): ShipmentService {
     getByReference: (reference: string) =>
       httpClient.get(apiEndPoints.shipments.getByReference(reference)),
     updateStatus: (shipmentId: string, data: FormData) =>
-      httpClient.patch(apiEndPoints.shipments.update_status(shipmentId), data),
+      httpClient.patch(apiEndPoints.shipments.update_status(shipmentId), data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }),
     list: (query: Query) => httpClient.get(apiEndPoints.shipments.list(query)),
   };
 }

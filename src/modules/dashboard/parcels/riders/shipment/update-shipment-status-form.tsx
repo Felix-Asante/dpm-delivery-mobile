@@ -48,6 +48,7 @@ export function UpdateShipmentStatusForm(props: UpdateShipmentStatusFormProps) {
 
   const form = useForm<UpdateShipmentStatusField>({
     resolver: zodResolver(updateShipmentStatusSchema),
+    mode: "onChange",
     defaultValues: {
       status: currentStatus,
     },
@@ -79,10 +80,11 @@ export function UpdateShipmentStatusForm(props: UpdateShipmentStatusFormProps) {
       formData.append("confirmationCode", data.confirmationCode || "");
       formData.append("isPaid", data.paid === true ? "true" : "false");
       if (data.photo) {
+        const uploadedPhoto = data.photo?.[0];
         const photo = {
-          uri: data.photo?.[0].uri,
-          type: data.photo?.[0].type,
-          name: data.photo?.[0].name,
+          uri: uploadedPhoto.uri,
+          type: uploadedPhoto.type ?? "application/octet-stream",
+          name: uploadedPhoto?.name || uploadedPhoto?.fileName || "photo.jpg",
         } as any;
         formData.append("photo", photo);
       }
@@ -208,7 +210,7 @@ export function UpdateShipmentStatusForm(props: UpdateShipmentStatusFormProps) {
               allowsMultiple={false}
               maxImages={1}
               errorMessage={photoError}
-              onImagesChange={(images) => console.log("photos", images)}
+              onImagesChange={(images) => form.setValue("photo", images)}
               allowedImageTypes={["jpg", "jpeg", "png"]}
             />
           ) : null}
