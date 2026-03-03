@@ -1,50 +1,149 @@
-# Welcome to your Expo app 👋
+# DPM Parcel Delivery App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A cross-platform mobile app for **delivery riders** to manage parcels, view earnings, update shipment statuses, and request payouts. Built with Expo and React Native.
 
-## Get started
+---
 
-1. Install dependencies
+## Features
 
-   ```bash
-   npm install
-   ```
+- **Authentication** — Sign in with phone and password; secure token storage (SecureStore on native, encrypted storage on web).
+- **Home dashboard** — Wallet balance, total earnings, quick actions (Request Payment, Transactions), and account stats.
+- **Available deliveries** — Browse and accept delivery requests; filter by status (Assigned, In Transit, Delivered, etc.).
+- **Order history** — View past orders with filters and infinite scroll; tap into full shipment details.
+- **Shipment details** — See route, contact info, payment summary; update shipment status (e.g. Pickup Confirmed, In Transit, Delivered) with optional notes/photos.
+- **Transactions** — List wallet transactions with pagination.
+- **Request payment** — Request payout (e.g. mobile money, bank transfer); verify mobile money numbers via Paystack-style flow.
+- **Profile** — View profile info, manage account (placeholders for edit profile, password, settings), and **logout**.
 
-2. Start the app
+---
 
-   ```bash
-   npx expo start
-   ```
+## Tech stack
 
-In the output, you'll find options to open the app in a
+| Area | Choice |
+|------|--------|
+| Framework | [Expo](https://expo.dev) (~54) + [React Native](https://reactnative.dev) |
+| Language | TypeScript |
+| Routing | [Expo Router](https://docs.expo.dev/router/introduction/) (file-based) |
+| UI | [HeroUI Native](https://heroui.com), [Uniwind](https://github.com/uniwind-ui/uniwind) (Tailwind-style styling) |
+| Data & API | [TanStack Query](https://tanstack.com/query/latest), [Axios](https://axios-http.com) |
+| Forms & validation | [React Hook Form](https://react-hook-form.com), [Zod](https://zod.dev), [@hookform/resolvers](https://github.com/react-hook-form/resolvers) |
+| Storage | [MMKV](https://github.com/mrousavy/react-native-mmkv) (native), [expo-secure-store](https://docs.expo.dev/versions/latest/sdk/securestore/) (tokens), web crypto for web |
+| Lists | [FlashList](https://shopify.github.io/flash-list/) |
+| Icons | expo-symbols (iOS) + MaterialIcons fallback (Android/Web) via custom `IconSymbol` |
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+---
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Prerequisites
 
-## Get a fresh project
+- **Node.js** (LTS recommended, e.g. 18+)
+- **npm** or **yarn**
+- **Expo CLI** (optional; `npx expo` is enough)
+- **iOS**: Xcode (Mac) for simulator/device
+- **Android**: Android Studio / SDK for emulator or device
+- **Web**: modern browser (Expo web)
 
-When you're ready, run:
+---
+
+## Getting started
+
+### 1. Clone and install
 
 ```bash
-npm run reset-project
+git clone <your-repo-url>
+cd dpm-parcel-delivery-app
+npm install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 2. Environment variables
 
-## Learn more
+Create a `.env.local` (or use your env scheme) in the project root with:
 
-To learn more about developing your project with Expo, look at the following resources:
+```env
+EXPO_PUBLIC_API_BASE_URL=https://your-api.example.com
+EXPO_PUBLIC_ENCRYPTION_KEY=your-encryption-key
+EXPO_PUBLIC_WEB_CRYPTO_KEY=your-web-crypto-key
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+- `EXPO_PUBLIC_API_BASE_URL` — Backend API base URL (required).
+- `EXPO_PUBLIC_ENCRYPTION_KEY` — Used for MMKV/encryption (required).
+- `EXPO_PUBLIC_WEB_CRYPTO_KEY` — Used for web crypto (required; see `src/utils/env.ts`).
 
-## Join the community
+Missing vars will throw at runtime (see `src/utils/env.ts`).
 
-Join our community of developers creating universal apps.
+### 3. Start the app
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```bash
+npx expo start
+```
+
+Then:
+
+- Press **i** for iOS simulator  
+- Press **a** for Android emulator  
+- Press **w** for web  
+- Or scan the QR code with **Expo Go** on a physical device (for development builds, use a custom dev client).
+
+---
+
+## Scripts
+
+| Command | Description |
+|--------|-------------|
+| `npm start` | Start Expo dev server |
+| `npm run android` | Run on Android |
+| `npm run ios` | Run on iOS |
+| `npm run web` | Start with web |
+| `npm run lint` | Run ESLint |
+| `npm run generate-apk` | Build release APK (Android) |
+| `npm run view:apk` | Open folder containing generated APK |
+
+---
+
+## Project structure (high level)
+
+```
+src/
+├── app/                    # Expo Router screens
+│   ├── (public)/           # Unauthenticated (e.g. sign-in)
+│   └── (parcel)/           # Authenticated rider app
+│       ├── (tabs)/         # Tab screens: Home, History, Transactions, Profile
+│       └── (stack)/        # Stack screens: shipment detail, request payment, etc.
+├── components/             # Shared UI (forms, cards, icons, etc.)
+├── constants/              # App config, theme, data
+├── hooks/                  # React hooks (theme, API, etc.)
+├── lib/                    # TanStack query options, payment gateways, logger
+├── modules/                # Feature modules (auth, dashboard, parcels, payouts)
+├── services/               # API services (auth, users, shipments, payment)
+├── types/                  # TypeScript types and enums
+├── utils/                  # Storage, env, currency, validation, errors
+├── global.css              # Tailwind + Uniwind + HeroUI styles
+└── uniwind-types.d.ts      # Uniwind TypeScript declarations
+```
+
+---
+
+## Configuration
+
+- **API base URL** — Set via `EXPO_PUBLIC_API_BASE_URL`; used in `src/services/api/end-points.ts`.
+- **Currency** — Default is **Cedis (₵)** in `src/constants/config.ts`; change there if you use another currency.
+- **Theme** — Light/dark support; colors in `src/constants/theme.ts` and `src/global.css`.
+
+---
+
+## Building for production
+
+- **Android APK**: `npm run generate-apk` (output in `android/app/build/outputs/apk/release/`).
+- **iOS**: Open `ios/` in Xcode and archive for TestFlight/App Store.
+- **Web**: Use Expo’s web export (e.g. `npx expo export --platform web`); host the output as a static site.
+
+---
+
+## License
+
+Private / All rights reserved (or add your chosen license).
+
+---
+
+## Contributing
+
+Contributions are welcome. Please open an issue or PR and follow the existing code style and structure.
