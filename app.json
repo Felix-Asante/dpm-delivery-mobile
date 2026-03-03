@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "dpm-parcel-delivery-app",
+    "name": "DPM Delivery",
     "slug": "dpm-parcel-delivery-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -9,7 +9,7 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "com.felix-asante.dpm-parcel-delivery-app"
     },
     "android": {
