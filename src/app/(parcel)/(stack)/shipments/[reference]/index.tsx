@@ -1,6 +1,7 @@
 import { getShipmentByReferenceQueryOptions } from "@/lib/tanstack-query/query-options/shipment";
 import { UpdateStatusModal } from "@/modules/dashboard/parcels/riders/shipment/update-status-modal";
 import { ShipmentStatus } from "@/types/enums/shipment.enum";
+import { formatCurrency } from "@/utils/currency";
 import { getShipmentOptionDisplay } from "@/utils/enum-helpers";
 import { getStatusColor, getStatusTextColor } from "@/utils/style";
 import { Ionicons } from "@expo/vector-icons";
@@ -89,6 +90,9 @@ export default function ShipmentDetail() {
   }
 
   const isDelivered = shipment.status === ShipmentStatus.DELIVERED;
+  const commission = shipment.shipmentCost?.riderCommission || 0;
+  const totalCost = shipment.shipmentCost?.totalCost || 0;
+  const riderCommission = (commission / 100) * totalCost || 0;
 
   return (
     <View className="flex-1 bg-white">
@@ -351,14 +355,14 @@ export default function ShipmentDetail() {
                 <View className="flex-row items-center justify-between">
                   <Text className="text-sm text-gray-600">Pickup Fee</Text>
                   <Text className="text-sm text-secondary font-semibold">
-                    ${shipment.shipmentCost.pickupFee}
+                    {formatCurrency(shipment.shipmentCost.pickupFee, "GHS")}
                   </Text>
                 </View>
 
                 <View className="flex-row items-center justify-between">
                   <Text className="text-sm text-gray-600">Delivery Fee</Text>
                   <Text className="text-sm text-secondary font-semibold">
-                    ${shipment.shipmentCost.deliveryFee}
+                    {formatCurrency(shipment.shipmentCost.deliveryFee, "GHS")}
                   </Text>
                 </View>
 
@@ -368,7 +372,10 @@ export default function ShipmentDetail() {
                       Repackaging Fee
                     </Text>
                     <Text className="text-sm text-secondary font-semibold">
-                      ${shipment.shipmentCost.repackagingFee}
+                      {formatCurrency(
+                        shipment.shipmentCost.repackagingFee,
+                        "GHS",
+                      )}
                     </Text>
                   </View>
                 )}
@@ -380,14 +387,14 @@ export default function ShipmentDetail() {
                     Total Cost
                   </Text>
                   <Text className="text-xl text-accent font-bold">
-                    ${shipment.shipmentCost.totalCost}
+                    {formatCurrency(shipment.shipmentCost.totalCost, "GHS")}
                   </Text>
                 </View>
 
                 <View className="flex-row items-center justify-between">
                   <Text className="text-sm text-gray-600">Your Commission</Text>
                   <Text className="text-base text-accent font-bold">
-                    ${shipment.shipmentCost.riderCommission}
+                    {formatCurrency(riderCommission, "GHS")}
                   </Text>
                 </View>
 

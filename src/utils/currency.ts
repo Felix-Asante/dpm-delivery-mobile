@@ -1,8 +1,11 @@
 export function formatCurrency(
   amount: number,
-  currencyCode: string = "USD",
+  currencyCode: string = "GHS",
 ): string {
-  const formatter = new Intl.NumberFormat("en-US");
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: currencyCode,
+  });
 
   return formatter.format(amount);
 }
