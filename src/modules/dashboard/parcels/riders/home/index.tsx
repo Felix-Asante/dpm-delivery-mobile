@@ -6,7 +6,7 @@ import { formatCurrency } from "@/utils/currency";
 import { Storage, StorageKeys } from "@/utils/storage";
 import { Ionicons } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { Avatar, Button, Skeleton } from "heroui-native";
 import React from "react";
 import { ImageBackground, Text, View } from "react-native";
@@ -34,12 +34,14 @@ export function RidersHomePage() {
           Hello{" "}
           <Text className="text-accent line-clamp-1">{user.fullName}</Text> 👋
         </Text>
-        <Avatar size="sm" alt={user.fullName} className="bg-accent">
-          <Avatar.Image source={{ uri: "" }} />
-          <Avatar.Fallback textProps={{ className: "tex-white text-lg" }}>
-            {getInitials(user.fullName)}
-          </Avatar.Fallback>
-        </Avatar>
+        <Link href="/(parcel)/(tabs)/profile">
+          <Avatar size="sm" alt={user.fullName} className="bg-accent">
+            <Avatar.Image source={{ uri: "" }} />
+            <Avatar.Fallback textProps={{ className: "tex-white text-lg" }}>
+              {getInitials(user.fullName)}
+            </Avatar.Fallback>
+          </Avatar>
+        </Link>
       </View>
       {/* wallet section */}
       <View className="rounded-2xl mt-4 relative">

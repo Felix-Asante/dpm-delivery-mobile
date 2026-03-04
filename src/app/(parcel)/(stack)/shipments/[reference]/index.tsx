@@ -457,9 +457,9 @@ export default function ShipmentDetail() {
                 Order Completed
               </Text>
             </View>
-            {shipment.dropOffDate && (
+            {shipment.updatedAt && (
               <Text className="text-xs text-green-600 text-center mt-2">
-                Delivered on {formatDate(shipment.dropOffDate)}
+                Delivered on {formatDate(shipment.updatedAt)}
               </Text>
             )}
           </View>
